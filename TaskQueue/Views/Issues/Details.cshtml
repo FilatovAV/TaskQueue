@@ -1,0 +1,20 @@
+﻿@model Issue
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Issue: @Model.Header</h1>
+
+<div>
+    <p>Creation time:</p>
+    <p>@Model.CreationDate</p>
+
+    <p>Execution time:</p>
+    <p>@Model.ExecutionDate</p>
+</div>
+
+<div>
+    <p>Content:</p>
+    <p>@Model.Content</p>
+</div>
