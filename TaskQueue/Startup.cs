@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaskQueue.Controllers.Implementations;
 using TaskQueue.Controllers.Interfaces;
+using TaskQueue.DAL.Context;
 
 namespace TaskQueue
 {
@@ -32,14 +34,21 @@ namespace TaskQueue
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<TaskQueueContext>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<TaskQueueContextInitializer>();
+
+
             services.AddSingleton<IIssuesData, InMemoryIssuesData>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, TaskQueueContextInitializer db)
         {
+            db.InitializeAsync().Wait();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
