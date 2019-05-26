@@ -44,6 +44,7 @@ namespace TaskQueue.Controllers
             else
             {
                 issue = new Issue();
+                issue.CreationDate = DateTime.Now.Date.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute);
             }
 
             return View(issue);
@@ -52,21 +53,22 @@ namespace TaskQueue.Controllers
         [HttpPost]
         public IActionResult Edit(Issue issue)
         {
-            //Валидация модели данных
-            if (issue.Header.Length < 6)
-            {
-                ModelState.AddModelError("Header", "Имя задачи должно содержать минимум 6 символов");
-            }
-            else if (issue.Content.Length < 6)
-            {
-                ModelState.AddModelError("Content", "Содержание задачи должно содержать минимум 6 символов");
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(issue);
             }
-            else if (issue.Id > 0)
+
+            //Валидация модели данных (доп.)
+            if (issue.ExecutionDate != null)
+            {
+                if (issue.ExecutionDate < issue.CreationDate)
+                {
+                    ModelState.AddModelError("ExecutionDate", "The creation date cannot exceed the due date!");
+                    return View(issue);
+                }
+            }
+
+            if (issue.Id > 0)
             {
                 var db_employee = issuesData.GetById(issue.Id);
                 if (db_employee is null)
