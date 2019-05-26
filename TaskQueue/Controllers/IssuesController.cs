@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TaskQueue.Controllers.Interfaces;
+using TaskQueue.Domain;
 
 namespace TaskQueue.Controllers
 {

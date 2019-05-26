@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskQueue.Controllers.Interfaces;
+using TaskQueue.Domain;
 
 namespace TaskQueue.Controllers.Implementations
 {
