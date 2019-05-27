@@ -18,5 +18,8 @@ namespace TaskQueue.Domain
         public DateTime CreationDate { get; set; }
         [Display(Name = "Execution date"), DataType(DataType.DateTime)]
         public DateTime? ExecutionDate { get; set; }
+        public int? StatusId { get; set; }
+        [ForeignKey(nameof(StatusId))]
+        public virtual Status Status { get; set; }
     }
 }
