@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,5 +22,7 @@ namespace TaskQueue.Domain
         public int? StatusId { get; set; }
         [ForeignKey(nameof(StatusId))]
         public virtual Status Status { get; set; }
+
+        //public virtual ICollection<Status> Statuses { get; set; } = new List<Status>();
     }
 }

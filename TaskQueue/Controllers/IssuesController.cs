@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TaskQueue.Controllers.Interfaces;
 using TaskQueue.Domain;
+using TaskQueue.ViewModels;
 
 namespace TaskQueue.Controllers
 {
@@ -16,9 +17,18 @@ namespace TaskQueue.Controllers
         {
             this.issuesData = issuesData;
         }
-        public IActionResult Index()
+        public IActionResult Index(bool get_date)
         {
-            return View(issuesData.GetAll());
+            if (get_date)
+            {
+                return View(issuesData.GetAll().Where(e => e.ExecutionDate > DateTime.Now
+                && e.StatusId != 2  //&& e.Status.Name != "Executed"
+                && (DateTime.Now - e.ExecutionDate) < TimeSpan.FromHours(2)));
+            }
+            else
+            {
+                return View(issuesData.GetAll());
+            }
         }
         public IActionResult Details(int id)
         {
@@ -48,11 +58,25 @@ namespace TaskQueue.Controllers
                 issue.CreationDate = DateTime.Now.Date.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute);
             }
 
-            return View(issue);
+
+            var issue_model = new IssueViewModel
+            {
+                Content = issue.Content,
+                CreationDate = issue.CreationDate,
+                ExecutionDate = issue.ExecutionDate,
+                Header = issue.Header,
+                Id = issue.Id,
+                Status = issue.Status,
+                StatusId = issue.StatusId,
+                //Issue = issue,
+                Statuses = issuesData.GetStatuses()
+            };
+
+            return View(issue_model);
         }
 
         [HttpPost]
-        public IActionResult Edit(Issue issue)
+        public IActionResult Edit(IssueViewModel issue)
         {
             if (!ModelState.IsValid)
             {
@@ -71,15 +95,16 @@ namespace TaskQueue.Controllers
 
             if (issue.Id > 0)
             {
-                var db_employee = issuesData.GetById(issue.Id);
-                if (db_employee is null)
+                var issues = issuesData.GetById(issue.Id);
+                if (issues is null)
                 {
                     return NotFound();
                 }
-                db_employee.Content = issue.Content;
-                db_employee.CreationDate = issue.CreationDate;
-                db_employee.ExecutionDate = issue.ExecutionDate;
-                db_employee.Header = issue.Header;
+                issues.Content = issue.Content;
+                issues.CreationDate = issue.CreationDate;
+                issues.ExecutionDate = issue.ExecutionDate;
+                issues.Header = issue.Header;
+                issues.StatusId = issue.Status.Id;
             }
             else
             {
@@ -99,6 +124,7 @@ namespace TaskQueue.Controllers
                 return NotFound();
             }
             issuesData.Delete((int)id);
+            issuesData.SaveChanges();
 
             return RedirectToAction("Index");
         }

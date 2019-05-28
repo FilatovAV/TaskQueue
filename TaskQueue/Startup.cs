@@ -39,7 +39,7 @@ namespace TaskQueue
             services.AddTransient<TaskQueueContextInitializer>();
 
 
-            services.AddSingleton<IIssuesData, InMemoryIssuesData>();
+            services.AddScoped<IIssuesData, SqlIssuesData>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
