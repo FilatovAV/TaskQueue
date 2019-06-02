@@ -32,8 +32,8 @@
                 <tr>
                     <td>@item.Header</td>
                     <td><a asp-controller="Issues" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
-                    <td>@item.CreationDate.ToString()</td>
-                    <td>@item.ExecutionDate.ToString()</td>
+                    <td>@item.CreationDate.ToString("g")</td>
+                    <td>@item.ExecutionDate?.ToString("g")</td>
                     <td>@item.Status.Name</td>
                     <td><a asp-controller="Issues" asp-action="Details" asp-route-id="@item.Id">View issue</a></td>
                     <td><a asp-controller="Issues" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-times text-danger"></i></a></td>
