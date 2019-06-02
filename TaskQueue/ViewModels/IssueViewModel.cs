@@ -11,6 +11,7 @@ namespace TaskQueue.ViewModels
     {
         public int Id { get; set; }
         public string Header { get; set; }
+        [Display(Name = "Description")]
         public string Content { get; set; }
         [Display(Name = "Creation date"), DataType(DataType.DateTime)]
         public DateTime CreationDate { get; set; }

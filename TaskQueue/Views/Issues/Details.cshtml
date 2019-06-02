@@ -6,20 +6,25 @@
 
 <h1>Issue: @Model.Header</h1>
 
-<div>
-    <p>Current status:</p>
-    <p>@Model.Status.Name</p>
+<div class="container">
+    <div class="row">
+        <p>Current status: @Model.Status.Name</p>
+    </div>
+
+    <div class="row justify-content-between">
+        <div>
+            <p>Created an issue:</p>
+            <p>@Model.CreationDate.ToString("g")</p>
+        </div>
+        <div>
+            <p>Execution date:</p>
+            <p>@Model.ExecutionDate?.ToString("g")</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <p>Description:</p>
+        <textarea readonly class="form-control" rows="5">@Model.Content</textarea>
+    </div>
 </div>
 
-<div>
-    <p>Creation time:</p>
-    <p>@Model.CreationDate</p>
-
-    <p>Execution time:</p>
-    <p>@Model.ExecutionDate</p>
-</div>
-
-<div>
-    <p>Content:</p>
-    <textarea readonly class="form-control" rows="5">@Model.Content</textarea>
-</div>
