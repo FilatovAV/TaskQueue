@@ -35,11 +35,11 @@ namespace TaskQueue
                     new Status{Id = 3, Name = "Await"},
                 };
 
-                _db.Statuses.AddRange(_Statuses);
+                await _db.Statuses.AddRangeAsync(_Statuses);
 
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Statuses] ON");
-                _db.SaveChanges();
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Statuses] OFF");
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Statuses] ON");
+                await _db.SaveChangesAsync();
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Statuses] OFF");
 
                 transaction.Commit();
             }
@@ -53,11 +53,11 @@ namespace TaskQueue
                     new Issue{ Id = 4, Header = "Fourth task", Content = "Content of the fourth task", CreationDate = DateTime.Now, ExecutionDate = DateTime.Now.Date.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute + 5), StatusId = 3 }
                 };
 
-                _db.Issues.AddRange(_Issues);
+                await _db.Issues.AddRangeAsync(_Issues);
 
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Issues] ON");
-                _db.SaveChanges();
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Issues] OFF");
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Issues] ON");
+                await _db.SaveChangesAsync();
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Issues] OFF");
 
                 transaction.Commit();
             }
