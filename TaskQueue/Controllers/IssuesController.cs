@@ -21,9 +21,7 @@ namespace TaskQueue.Controllers
         {
             if (get_date)
             {
-                return View(issuesData.GetAll().Where(e => e.ExecutionDate > DateTime.Now
-                && e.StatusId != 2  //&& e.Status.Name != "Executed"
-                && (DateTime.Now - e.ExecutionDate) < TimeSpan.FromHours(2)));
+                return View(issuesData.GetTasksToClose(120));
             }
             else
             {
