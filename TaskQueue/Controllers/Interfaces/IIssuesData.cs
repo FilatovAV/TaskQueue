@@ -11,6 +11,8 @@ namespace TaskQueue.Controllers.Interfaces
     {
         /// <summary> Получить все задачи </summary>
         IEnumerable<Issue> GetAll();
+        /// <summary> Получить задачи необходимые закрыть в ближайшие минуты (minutes)</summary>
+        IEnumerable<Issue> GetTasksToClose(int minutes);
         /// <summary> Получить все возможные статусы </summary>
         IEnumerable<Status> GetStatuses();
         /// <summary> Получить задачу по Id </summary>

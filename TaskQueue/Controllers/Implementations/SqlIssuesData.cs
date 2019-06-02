@@ -55,6 +55,18 @@ namespace TaskQueue.Controllers.Implementations
             return _db.Statuses.AsEnumerable();
         }
 
+        public IEnumerable<Issue> GetTasksToClose(int diff_minutes)
+        {
+            IQueryable<Issue> 
+            issues = _db.Issues.Where(s => s.StatusId != 2);
+            issues = issues.Where(t => t.ExecutionDate != null);
+            issues = issues.Where(t => t.ExecutionDate > DateTime.Now);
+            issues = issues.Where(d => EF.Functions.DateDiffMinute(DateTime.Now, d.ExecutionDate) <= diff_minutes);
+            issues = issues.Include(s => s.Status);
+
+            return issues.AsEnumerable();
+        }
+
         public void SaveChanges()
         {
             _db.SaveChanges();

@@ -9,10 +9,10 @@
 
 <body>
     <div>
-        <a asp-controller="Issues" asp-action="Index" asp-route-get_date="@null">Показать все</a>
+        <a asp-controller="Issues" asp-action="Index" asp-route-get_date="@null">Show all</a>
     </div>
     <div>
-        <a asp-controller="Issues" asp-action="Index" asp-route-get_date="@true">Закрыть в ближайшие 2 часа</a>
+        <a asp-controller="Issues" asp-action="Index" asp-route-get_date="@true">To close in the next 2 hours</a>
     </div>
     <table class="table table-hover">
         <thead>
@@ -32,8 +32,8 @@
                 <tr>
                     <td>@item.Header</td>
                     <td><a asp-controller="Issues" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
-                    <td>@item.CreationDate.ToString()</td>
-                    <td>@item.ExecutionDate.ToString()</td>
+                    <td>@item.CreationDate.ToString("g")</td>
+                    <td>@item.ExecutionDate?.ToString("g")</td>
                     <td>@item.Status.Name</td>
                     <td><a asp-controller="Issues" asp-action="Details" asp-route-id="@item.Id">View issue</a></td>
                     <td><a asp-controller="Issues" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-times text-danger"></i></a></td>
@@ -42,6 +42,6 @@
         </tbody>
     </table>
 
-    <a class="btn btn-block btn-light" asp-controller="Issues" asp-action="Edit" asp-route-id="@null">Добавить Задачу</a>
+    <a class="btn btn-block btn-light" asp-controller="Issues" asp-action="Edit" asp-route-id="@null">Add Task</a>
     @*<i class="fa fa-plus fa-low-vision"></i>  Добавить Задачу </a>*@
 </body>
