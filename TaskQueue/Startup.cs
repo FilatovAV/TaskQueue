@@ -73,8 +73,8 @@ namespace TaskQueue
                 cnfg.Cookie.Expiration = TimeSpan.FromDays(150);
                 cnfg.Cookie.MaxAge = TimeSpan.FromDays(150);
 
-                cnfg.LoginPath = "Account/Login";
-                cnfg.LogoutPath = "Account/Logout";
+                cnfg.LoginPath = "/Account/Login";
+                cnfg.LogoutPath = "/Account/Logout";
                 cnfg.AccessDeniedPath = "/Account/AccessDenied";
 
                 //пользователю который прошел афторизацию будет сменен номер сеанса (для повышения безопасности)
