@@ -1,0 +1,23 @@
+﻿    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link btn-link" asp-area="" asp-controller="Issues" asp-action="Index">Issues</a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        <ul class="navbar-nav flex-grow-1 justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link btn-link" asp-area="" asp-controller="Account" asp-action="Login"><i class="fa fa-user"></i> @User.Identity.Name</a>
+            </li>
+            @if (User.IsInRole("Administrator"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link btn-link" asp-area="" asp-controller="Account" asp-action="Login"><i class="fa fa-key"></i> Backend</a>
+                </li>
+            }
+            <li class="nav-item">
+                <a class="nav-link btn-link " asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-lock"></i> Logout</a>
+            </li>
+        </ul>
+    </div>

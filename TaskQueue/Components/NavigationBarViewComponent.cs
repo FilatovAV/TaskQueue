@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace TaskQueue.Components
 {
-    [ViewComponent(Name = "UserInfo")]
-    public class UserInfoViewComponent: ViewComponent
+    public class NavigationBarViewComponent: ViewComponent
     {
         public IViewComponentResult Invoke()
         {
+            //Если мы авторизовались отображаем NavigationBarView
             if (User.Identity.IsAuthenticated)
             {
-                return View("userInfoView");
+                return View("NavigationBarView");
             }
-
+            //В противном случае отображаем Default view
             return View();
         }
     }
